@@ -1,0 +1,48 @@
+# Build Project from CMake Quickstart 
+my_project$ cmake -S . -B build
+
+-- Detecting CXX compile features - done
+CMake Warning (dev) at /usr/share/cmake-3.24/Modules/FetchContent.cmake:1267 (message):
+  The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy CMP0135 is
+  not set.  The policy's OLD behavior will be used.  When using a URL
+  download, the timestamps of extracted files should preferably be that of
+  the time of extraction, otherwise code that depends on the extracted
+  contents might not be rebuilt if the URL changes.  The OLD behavior
+  preserves the timestamps from the archive instead, but this is usually not
+  what you want.  Update your project to the NEW behavior or specify the
+  DOWNLOAD_EXTRACT_TIMESTAMP option with a value of true to avoid this
+  robustness issue.
+Call Stack (most recent call first):
+  CMakeLists.txt:9 (FetchContent_Declare)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Found Python: /usr/bin/python3.10 (found version "3.10.7") found components: Interpreter 
+
+
+# CMake example bypasses CMP0135 error, by not using URL.
+https://cmake.org/cmake/help/latest/module/FetchContent.html#typical-case
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        703bd9caab50b139428cea1aaff9974ebee5742e # release-1.10.0
+)
+
+# Gives error when building:
+CMake Error at CMakeLists.txt:25 (target_link_libraries):
+  Target "hello_test" links to:                                                                                                       
+                                                                                                                                      
+    GTest::gtest_main                                                                                                                 
+                                                                                                                                      
+  but the target was not found.  Possible reasons include:                                                                            
+                                                                                                                                      
+    * There is a typo in the target name.                                                                                             
+    * A find_package call is missing for an IMPORTED target.                                                                          
+    * An ALIAS target is missing.                                                                                                     
+# Using latest commit:
+# https://github.com/google/googletest/commits/
+GIT_TAG 9b12f749fa972d08703d8459e9bf3239617491ca
+
+Super Green!
+
